@@ -6,3 +6,6 @@ theme: minima
 # tweaking minima
 minima:
   skin: solarized
+
+title: Skandan Yalagach
+markdown: kramdown
