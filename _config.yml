@@ -1,11 +1,11 @@
 theme: minima
-# title: Checking things out
-# author: myself
-# description: dekh te hai, ki kya hota hai...
+title: Glacier.Blogs
+author: Skandan C Yalagach
+description: dekh te hai, ki kya hota hai...
 
 # tweaking minima
 minima:
   skin: solarized
 
-title: Skandan Yalagach
 markdown: kramdown
+
