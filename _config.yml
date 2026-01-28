@@ -1,11 +1,22 @@
-theme: minima
-title: Glacier.Blogs
-author: Skandan C Yalagach
-description: dekh te hai, ki kya hota hai...
 
-# tweaking minima
-minima:
-  skin: solarized
+title: John Doe | Systems Engineer
+description: Precise engineering and systems architecture portfolio.
+baseurl: ""
+url: "https://yourusername.github.io"
 
 markdown: kramdown
+highlighter: rouge
+permalink: /blog/:title/
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+exclude:
+  - metadata.json
+  - index.tsx
+  - App.tsx
+  - data.ts
+  - types.ts
+  - components/
 

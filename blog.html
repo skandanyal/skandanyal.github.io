@@ -1,0 +1,26 @@
+
+---
+layout: default
+title: Archive
+---
+
+<section>
+  <div class="mono" style="margin-bottom: var(--space-md);">
+    <a href="{{ '/' | relative_url }}" style="text-decoration: none; color: var(--text-light);">← Root</a>
+  </div>
+  
+  <h1 style="font-size: 2.5rem; border-bottom: 2px solid #111; display: inline-block; padding-bottom: 10px;">Technical Log</h1>
+  
+  <div class="blog-list" style="margin-top: var(--space-lg);">
+    {% for post in site.posts %}
+    <a href="{{ post.url | relative_url }}" class="blog-item">
+      <span class="blog-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+      <div>
+        <h3>{{ post.title }}</h3>
+        <p style="font-size: 0.85rem; color: #777; margin-top: 4px;">{{ post.excerpt | strip_html | truncatewords: 15 }}</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+

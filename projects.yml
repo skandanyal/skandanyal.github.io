@@ -1,0 +1,11 @@
+
+- title: "Distributed Tensor Runtime Optimizer"
+  description: "A systems-first approach to optimizing ML training throughput. Implements a custom task scheduler in C++ and Python to minimize GPU-CPU synchronization overhead."
+  github: "https://github.com/example/tensor-optimizer"
+  tags: ["C++", "CUDA", "Distributed Systems"]
+
+- title: "Massively Parallel Fluid Dynamics Solver"
+  description: "High-performance computing project leveraging MPI and OpenMP for fluid flow simulation. Achieving 98% weak scaling efficiency across 512 compute nodes."
+  github: "https://github.com/example/hpc-solver"
+  tags: ["MPI", "OpenMP", "HPC"]
+
