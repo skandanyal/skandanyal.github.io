@@ -110,9 +110,9 @@ nav .links a:hover {
 
 /* Section Spacing: Professional Gaps */
 section {
-  padding-bottom: var(--space-xl);
+  padding-bottom: var(--space-md);
   border-bottom: 1px solid var(--border-subtle);
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-md);
   animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
