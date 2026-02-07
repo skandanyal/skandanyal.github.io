@@ -12,7 +12,7 @@ title: Portfolio
   </p>
   <div class="mono" style="display: flex; gap: 2rem; margin-top: var(--space-md);">
     <a href="https://github.com/skandanyal" style="color: black; text-decoration: none; border-bottom: 1px solid black;">Github</a>
-    <a href="https://linkedin.com/skandan-cy" style="color: black; text-decoration: none; border-bottom: 1px solid black;">LinkedIn</a>
+    <a href="https://linkedin.com/in/skandan-cy/" style="color: black; text-decoration: none; border-bottom: 1px solid black;">LinkedIn</a>
     <a href="mailto:skandanyalagach@gmail.com" style="color: black; text-decoration: none; border-bottom: 1px solid black;">Email</a>
   </div>
 </section>
