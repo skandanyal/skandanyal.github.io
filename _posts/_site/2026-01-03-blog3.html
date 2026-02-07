@@ -1,0 +1,110 @@
+<h1 id="optimizing-k-nearest-neighbours-from-naive-to-hardware-aware">Optimizing K Nearest Neighbours: From Naive to Hardware-Aware</h1>
+
+<p>KNN is one of the simplest Supervised ML algorithms to be taught to ML aspirants. Being a lazy 
+learner, the KNN kernel is only used during prediction not to train the model.</p>
+
+<p>This work shows that, when approached systematically across mathematical, software and hardware 
+dimensions, KNN can be pushed closer to the hardware limits, while retaining the underlying 
+algorithm and hardware.</p>
+
+<p>By following a structured optimization path, the KNN Classifier and Regressor implementations achieve
+upto <code class="language-plaintext highlighter-rouge">250x</code> speed-up over naive baseline.</p>
+
+<h2 id="a-structured-path-to-performance">A Structured Path to Performance</h2>
+
+<p>The optimization followed a clear and layered progression:</p>
+<ol>
+  <li>Naive implementation of the mathematical model</li>
+  <li>Mathematical optimizations of the same model</li>
+  <li>Software-centric optimizations</li>
+  <li>Hardware-centric optimizations</li>
+</ol>
+
+<p>Each layer presented their own bottlenecks and opportunities.</p>
+
+<h2 id="mathematical-optimizations">Mathematical optimizations</h2>
+
+<h3 id="efficient-selection-of-neighbours">Efficient Selection of Neighbours</h3>
+<p>A significant computation is taken up in searching the <code class="language-plaintext highlighter-rouge">k</code> nearest neighbours from the query. While 
+the naive approach involves using a <code class="language-plaintext highlighter-rouge">min_heap</code> to arrange and retrive the points, a much cost effective 
+alternative involves using <code class="language-plaintext highlighter-rouge">std::nth_element</code> for the same.</p>
+
+<h2 id="software-centric-optimizations">Software-centric optimizations</h2>
+
+<h3 id="efficient-data-layout-optimization">Efficient Data Layout optimization</h3>
+<ul>
+  <li><strong>Row major / Column major representation:</strong> Originally, the 2 dimensional X matrix was 
+represented using <code class="language-plaintext highlighter-rouge">std::vector&lt;std::vector&lt;float&gt;&gt;</code>. It was then replaced with <code class="language-plaintext highlighter-rouge">std::vector&lt;float&gt;</code>.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Transformation:
+X[row, col] =&gt; X[row * Ncols + col]
+</code></pre></div>    </div>
+    <p>This results in:</p>
+  </li>
+  <li>Lower cache misses</li>
+  <li>Predictable stride, resulting in predictable memory access</li>
+  <li>Enables SIMD auto-vectorization by the compiler, given the matrix is densely populated.</li>
+</ul>
+
+<h2 id="hardware-centric-optimizations">Hardware-centric optimizations</h2>
+
+<h3 id="parallelization-using-openmp">Parallelization using OpenMP:</h3>
+<ul>
+  <li>Parallelization allows multiple threads in the CPU to carry out operations parallely, resulting in 
+lowered time consumption at the cost of added synchronization overhead. <code class="language-plaintext highlighter-rouge">OpenMP</code> enables parallelization on supported CPUs 
+when used with the flag <code class="language-plaintext highlighter-rouge">-fopenmp</code> used during compilation.</li>
+  <li>When used on a CPU with all cores of equal performance and 2 threads for each core, using half 
+the total available threads (6/12 threads) resulted in the best performance.</li>
+</ul>
+
+<h3 id="simd-vectorization">SIMD Vectorization:</h3>
+<ul>
+  <li>Distance computation results in repeated summations, enabling <code class="language-plaintext highlighter-rouge">reductions</code>. Using <code class="language-plaintext highlighter-rouge">-march=native</code> 
+allows AVX512/AVX2 auto-reductions based on the chip architecture.</li>
+</ul>
+
+<h3 id="compiler-flag-optimizations">Compiler Flag Optimizations</h3>
+<ul>
+  <li>Switched from using <code class="language-plaintext highlighter-rouge">-O0</code> to <code class="language-plaintext highlighter-rouge">-O3</code> enabling aggressive hardware specific optimization.</li>
+  <li><code class="language-plaintext highlighter-rouge">-ffast-math</code> allows faster math operations while compromising on mathematical stability.</li>
+</ul>
+
+<h3 id="profiling">Profiling</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">perf</code> was used to profile the code and identify high runtime hotspots.</li>
+</ul>
+
+<h2 id="result">Result</h2>
+<p><img src="/assets/blog2/benchmarking_result_knnc.jpeg" alt="KNNC Results" /></p>
+
+<h3 id="benchmarking-setup">Benchmarking Setup</h3>
+<ul>
+  <li>Datasets ranged from 500x10 to 140,000x10.</li>
+  <li>Observed 100x to 250x speed-up compared to unoptimized builds.</li>
+  <li>Final implementation still 4x to 36x slower than scikit-learn models when used with same hyperparameters.</li>
+  <li>Optimization infrastructure increased the code complexity and compile time.</li>
+</ul>
+
+<h2 id="learnings">Learnings</h2>
+
+<ul>
+  <li>Clear distinction between:
+    <ul>
+      <li>Mathematical models on paper</li>
+      <li>Mathematical implementations using code</li>
+      <li>hardware-aware optimized models</li>
+    </ul>
+  </li>
+  <li>Importance of understanding
+    <ul>
+      <li>Operating systems</li>
+      <li>CPU architecture</li>
+    </ul>
+  </li>
+  <li>Importance of
+    <ul>
+      <li>Profiling tools like <code class="language-plaintext highlighter-rouge">perf</code></li>
+      <li>Robust IDEs like CLion</li>
+    </ul>
+  </li>
+  <li>Realization that high-level bindings and wrappers hide extensive engineering effort.</li>
+</ul>

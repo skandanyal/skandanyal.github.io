@@ -6,15 +6,15 @@ title: Portfolio
 
 <section id="about">
   <span class="section-label mono">01 // Identity</span>
-  <h1>John Doe</h1>
+  <h1>Skandan C Yalagach</h1>
   <p class="text-lg" style="font-size: 1.25rem; line-height: 1.5; color: #111; max-width: 90%;">
-    Systems engineer specializing in <strong>low-latency distributed infrastructure</strong> and 
-    <strong>HPC optimization</strong>. Building performance-critical runtimes for high-scale machine learning.
+    Computer Science undergraduate, actively working on <strong>Performance-critical Numerical Kernels</strong> and <strong>Systems-ML 
+    engineering projects</strong>.
   </p>
   <div class="mono" style="display: flex; gap: 2rem; margin-top: var(--space-md);">
-    <a href="https://github.com" style="color: black; text-decoration: none; border-bottom: 1px solid black;">Github</a>
-    <a href="https://linkedin.com" style="color: black; text-decoration: none; border-bottom: 1px solid black;">LinkedIn</a>
-    <a href="mailto:contact@jdoe.com" style="color: black; text-decoration: none; border-bottom: 1px solid black;">Email</a>
+    <a href="https://github.com/skandanyal" style="color: black; text-decoration: none; border-bottom: 1px solid black;">Github</a>
+    <a href="https://linkedin.com/skandan-c-y" style="color: black; text-decoration: none; border-bottom: 1px solid black;">LinkedIn</a>
+    <a href="mailto:skandanyalagach@gmail.com" style="color: black; text-decoration: none; border-bottom: 1px solid black;">Email</a>
   </div>
 </section>
 
@@ -37,7 +37,7 @@ title: Portfolio
 </section>
 
 <section id="blogs">
-  <span class="section-label mono">03 // Recent Observations</span>
+  <span class="section-label mono">03 // Technical Blogs</span>
   <div class="blog-list">
     {% for post in site.posts limit:5 %}
     <a href="{{ post.url | relative_url }}" class="blog-item">

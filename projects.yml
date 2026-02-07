@@ -1,11 +1,14 @@
 
-- title: "Distributed Tensor Runtime Optimizer"
-  description: "A systems-first approach to optimizing ML training throughput. Implements a custom task scheduler in C++ and Python to minimize GPU-CPU synchronization overhead."
-  github: "https://github.com/example/tensor-optimizer"
-  tags: ["C++", "CUDA", "Distributed Systems"]
+- title: "Glacier.ML"
+  description: "A Performance-focused C++20 based Numerical algorithms library, designed to 
+  build and experiment with machine learning algorithms while emphasizing efficiency on 
+  modern multi-core CPU architectures."
+  github: "https://github.com/skandanyal/Glacier.ML"
+  tags: ["C++20", "OpenMP", "OpenBLAS", 'perf']
 
-- title: "Massively Parallel Fluid Dynamics Solver"
-  description: "High-performance computing project leveraging MPI and OpenMP for fluid flow simulation. Achieving 98% weak scaling efficiency across 512 compute nodes."
-  github: "https://github.com/example/hpc-solver"
-  tags: ["MPI", "OpenMP", "HPC"]
+- title: "Glacier.HPC"
+  description: "Profiling, Benchmarking and Analysis of Numerical Kernels derived from 
+  common Supervised Machine Learning algorithms on consumer grade computing hardware"
+  github: "https://github.com/skandanyal/Glacier.HPC"
+  tags: ["C++20", "C17" "OpenMP", "CUDA", "perf", "NSight"]
 
