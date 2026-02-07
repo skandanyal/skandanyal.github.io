@@ -1,0 +1,28 @@
+
+- title: "Glacier.ML"
+  description: >
+    A performance-focused C++20 numerical algorithms library designed to
+    build and experiment with machine learning algorithms while emphasizing
+    efficiency on modern multi-core CPU architectures.
+  github: "https://github.com/skandanyal/Glacier.ML"
+  tags: ["C++20", "OpenMP", "OpenBLAS", "perf"]
+
+- title: "Glacier.HPC"
+  description: >
+    Profiling, benchmarking, and analysis of numerical kernels derived from
+    common supervised machine learning algorithms on consumer-grade hardware.
+  github: "https://github.com/skandanyal/Glacier.HPC"
+  tags: ["C++20", "C17", "OpenMP", "CUDA", "perf", "NSight"]
+
+
+
+
+
+
+
+
+
+
+
+
+
