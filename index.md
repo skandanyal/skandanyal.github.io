@@ -20,21 +20,34 @@ title: Portfolio
 
 <section id="projects">
   <span class="section-label mono">02 // Selected Technical Work</span>
+
   <div class="project-list">
     {% for project in site.data.projects %}
-    <div class="project-item">
-      <div class="project-meta">
-        {% for tag in project.tags %}
-        <span class="tag">{{ tag }}</span>
-        {% endfor %}
-      </div>
-      <h3>{{ project.title }}</h3>
-      <p>{{ project.description }}</p>
-      <a href="{{ project.github }}" class="btn">View Source</a>
-    </div>
+    <article class="project-item">
+
+      <header class="project-header">
+        <h3 class="project-title">{{ project.title }}</h3>
+
+        <div class="project-tags">
+          {% for tag in project.tags %}
+          <span class="tag mono">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      </header>
+
+      <p class="project-description">
+        {{ project.description }}
+      </p>
+
+      <a href="{{ project.github }}" class="btn mono">
+        View Source →
+      </a>
+
+    </article>
     {% endfor %}
   </div>
 </section>
+                                                          
 
 <section id="blogs">
   <span class="section-label mono">03 // Technical Blogs</span>
