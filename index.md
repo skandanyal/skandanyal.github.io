@@ -59,6 +59,6 @@ title: Portfolio
     </a>
     {% endfor %}
   </div>
-  <a href="{{ '/archive.html' | relative_url }}" class="btn" style="margin-top: var(--space-md);">Archive // All Posts</a>
+  <a href="{{ '/archive/' | relative_url }}" class="btn" style="margin-top: var(--space-md);">Archive // All Posts</a>
 </section>
 
