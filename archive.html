@@ -1,0 +1,23 @@
+---
+layout: default
+title: Archive
+---
+
+<section>
+  <h1>Technical Log</h1>
+
+  <ul>
+    {% for post in site.posts %}
+      <li style="margin-bottom: 1.5rem;">
+        <strong>{{ post.date | date: "%Y-%m-%d" }}</strong><br>
+        <a href="{{ post.url | relative_url }}">
+          {{ post.title }}
+        </a><br>
+        <span style="color: #666;">
+          {{ post.excerpt | strip_html | truncatewords: 15 }}
+        </span>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
