@@ -7,8 +7,8 @@ title: Portfolio
   <span class="section-label mono">01 // Identity</span>
   <h1>Skandan C Yalagach</h1>
   <p class="text-lg" style="font-size: 1.25rem; line-height: 1.5; color: #111; max-width: 90%;">
-    Computer Science undergraduate, actively working on <strong>Performance-critical Numerical Kernels</strong> and <strong>Systems-ML 
-    engineering projects</strong>.
+    Computer Science undergraduate specializing in <strong>Performance-critical numerical kernels</strong> and <strong>Systems-ML 
+    engineering</strong>.
   </p>
   <div class="mono" style="display: flex; gap: 2rem; margin-top: var(--space-md);">
     <a href="https://github.com/skandanyal" style="color: black; text-decoration: none; border-bottom: 1px solid black;">Github</a>
@@ -18,7 +18,7 @@ title: Portfolio
 </section>
 
 <section id="projects">
-  <span class="section-label mono">02 // Selected Technical Work</span>
+  <span class="section-label mono">02 // Technical Work</span>
 
   <div class="project-list">
     {% for project in site.data.projects %}
