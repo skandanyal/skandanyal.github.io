@@ -1,5 +1,3 @@
-<h1 id="building-my-own-c20-header-only-ml-library">Building my own C++20 header-only ML library</h1>
-
 <p>Glacier.ML is a header-only numerical algorithms library implemented entirely in C++ with <code class="language-plaintext highlighter-rouge">Eigen</code> sometimes used for linear algebra.</p>
 
 <p><img src="/assets/blog1/Pasted_image_1.png" alt="Glacier.ML" />
@@ -33,31 +31,31 @@ Evaluation metrics and training-time comparisons were measured against Scikit-le
 
 <p>Below is a minimal example demonstrating dataset ingestion, training, prediction, and evaluation using Glacier.ML’s binary logistic regression pipeline.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#include "Glacier/Models/MLmodel.hpp"
-#include "Glacier/Utils/utilities.hpp"
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"Glacier/Models/MLmodel.hpp"</span><span class="cp">
+#include</span> <span class="cpf">"Glacier/Utils/utilities.hpp"</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&gt;</span> <span class="n">X</span><span class="p">,</span> <span class="n">X_t</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">y</span><span class="p">,</span> <span class="n">y_t</span><span class="p">;</span>
 
-int main() {
-    std::vector&lt;std::vector&lt;float&gt;&gt; X, X_t;
-    std::vector&lt;std::string&gt; y, y_t;
+    <span class="n">Glacier</span><span class="o">::</span><span class="n">Utils</span><span class="o">::</span><span class="n">read_csv_c</span><span class="p">(</span><span class="s">"../Datasets/training_dataset.csv"</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+    <span class="n">Glacier</span><span class="o">::</span><span class="n">Utils</span><span class="o">::</span><span class="n">read_csv_c</span><span class="p">(</span><span class="s">"../Datasets/testing_dataset.csv"</span><span class="p">,</span> <span class="n">X_t</span><span class="p">,</span> <span class="n">y_t</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
 
-    Glacier::Utils::read_csv_c("../Datasets/training_dataset.csv", X, y, true);
-    Glacier::Utils::read_csv_c("../Datasets/testing_dataset.csv", X_t, y_t, true);
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&gt;</span> <span class="n">X_p</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">....</span> <span class="n">n</span><span class="p">}</span>
+    <span class="p">};</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">y_p</span> <span class="o">=</span> <span class="p">{</span><span class="s">"label_1"</span><span class="p">};</span>
 
-    std::vector&lt;std::vector&lt;float&gt;&gt; X_p = {
-        {1, 2, 3 .... n}
-    };
-    std::vector&lt;std::string&gt; y_p = {"label_1"};
+    <span class="n">Glacier</span><span class="o">::</span><span class="n">Models</span><span class="o">::</span><span class="n">MLmodel</span> <span class="nf">md</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
 
-    Glacier::Models::MLmodel md(X, y);
+    <span class="kt">float</span> <span class="n">hp1</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
+    <span class="n">md</span><span class="p">.</span><span class="n">train</span><span class="p">(</span><span class="n">hp1</span><span class="p">);</span>
 
-    float hp1 = 1.0f;
-    md.train(hp1);
+    <span class="k">auto</span> <span class="n">md_pred</span> <span class="o">=</span> <span class="n">md</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_p</span><span class="p">);</span>
+    <span class="n">md</span><span class="p">.</span><span class="n">analyze_2_targets</span><span class="p">(</span><span class="n">X_t</span><span class="p">,</span> <span class="n">y_t</span><span class="p">);</span>
 
-    auto md_pred = md.predict(X_p);
-    md.analyze_2_targets(X_t, y_t);
-
-    return 0;
-}
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div></div>
 <p>This example illustrates Glacier.ML’s design goal: a minimal, explicit training and evaluation pipeline without hidden abstractions. Hyperparameters, data ingestion, and evaluation remain directly visible to the user.</p>
 

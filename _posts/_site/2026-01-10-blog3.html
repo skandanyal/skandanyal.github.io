@@ -1,0 +1,246 @@
+<p>Glacier.ML now includes working implementations of:</p>
+
+<ul>
+  <li><strong>SVM Classifier</strong></li>
+  <li><strong>SVM Regressor</strong></li>
+</ul>
+
+<p>Both are implemented in C++ using:</p>
+
+<ul>
+  <li><strong>Eigen</strong> for linear algebra</li>
+  <li><strong>OpenMP</strong> for multithreading</li>
+  <li><strong>OpenBLAS</strong> for optimized BLAS routines</li>
+</ul>
+
+<p>In local benchmarks, the classifier variant demonstrates <strong>4–10× faster training</strong> compared to scikit-learn under comparable conditions. This post documents the algorithmic design, performance characteristics, and implementation philosophy behind these models.</p>
+
+<hr />
+
+<h2 id="algorithmic-clarification-not-classical-kernel-svm">Algorithmic Clarification: Not Classical Kernel SVM</h2>
+
+<p>Glacier’s SVM implementations are not dual-form, kernelized SVMs.</p>
+
+<p>They are based on:</p>
+
+<p><strong>PEGASOS</strong><br />
+(Primal Estimated sub-GrAdient SOlver for SVM)</p>
+
+<p>PEGASOS directly optimizes the primal objective using stochastic subgradient descent.</p>
+
+<h3 id="classification-objective">Classification Objective</h3>
+
+<p>[
+\min_w \frac{\lambda}{2} |w|^2 + \frac{1}{m} \sum_{i=1}^m \max(0, 1 - y_i w^T x_i)
+]</p>
+
+<h3 id="regression-objective-ε-insensitive-loss">Regression Objective (ε-insensitive loss)</h3>
+
+<p>[
+\min_w \frac{\lambda}{2} |w|^2 + \frac{1}{m} \sum_{i=1}^m \max(0, |y_i - w^T x_i| - \epsilon)
+]</p>
+
+<p>This places Glacier’s SVM variants closer in spirit to:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">SGDClassifier</code></li>
+  <li><code class="language-plaintext highlighter-rouge">SGDRegressor</code></li>
+</ul>
+
+<p>rather than <code class="language-plaintext highlighter-rouge">SVC</code> with kernel tricks.</p>
+
+<p>The models are strictly <strong>linear</strong>. No feature mapping or kernel transformation is performed.</p>
+
+<hr />
+
+<h2 id="implementation-stack">Implementation Stack</h2>
+
+<h3 id="1-eigen--openblas">1. Eigen + OpenBLAS</h3>
+
+<ul>
+  <li>Eigen provides matrix abstractions and expression templates.</li>
+  <li>OpenBLAS accelerates low-level BLAS operations.</li>
+</ul>
+
+<p>Key goals:</p>
+
+<ul>
+  <li>Cache-friendly layouts</li>
+  <li>Minimal heap allocations</li>
+  <li>Efficient vectorized dot products</li>
+  <li>Reduced abstraction overhead</li>
+</ul>
+
+<p>The implementation avoids unnecessary temporaries and keeps updates memory-local wherever possible.</p>
+
+<hr />
+
+<h3 id="2-openmp-threading-strategy">2. OpenMP Threading Strategy</h3>
+
+<p>Glacier uses <strong>half of the available hardware threads by default</strong>.</p>
+
+<p>This is deliberate.</p>
+
+<p>Instead of saturating the CPU:</p>
+
+<ul>
+  <li>Thermal throttling is reduced.</li>
+  <li>Sustained performance is more stable.</li>
+  <li>System responsiveness is preserved.</li>
+</ul>
+
+<p>In contrast, scikit-learn often utilizes all available threads depending on the BLAS backend.</p>
+
+<p>Thread policy alone can significantly affect observed training time.</p>
+
+<hr />
+
+<h2 id="performance-observations">Performance Observations</h2>
+
+<h3 id="speed">Speed</h3>
+
+<p>The classifier model showed <strong>4–10× faster training</strong> compared to scikit-learn in local tests.</p>
+
+<p><img src="/assets/blog3/graph.jpeg" alt="Benchmark result" /></p>
+
+<p>Important caveats:</p>
+
+<ul>
+  <li>The implementations are not identical.</li>
+  <li>Threading strategies differ.</li>
+  <li>Memory allocation patterns differ.</li>
+  <li>Learning rate scheduling may differ.</li>
+</ul>
+
+<p>This is not a strict apples-to-apples benchmark.</p>
+
+<hr />
+
+<h3 id="underfitting-on-give-me-some-credit">Underfitting on “Give Me Some Credit”</h3>
+
+<p>Both Glacier and scikit-learn underfit on the <strong>“Give Me Some Credit”</strong> dataset.</p>
+
+<p><img src="/assets/blog3/sklearn_matrix.jpeg" alt="sklearn confusion matrix" />  <br />
+<img src="/assets/blog3/glacier_matrix.jpeg" alt="Glacier.ML confusion matrix" /></p>
+
+<p>Evidence:</p>
+
+<ul>
+  <li>Weak recall on minority classes</li>
+  <li>Confusion matrices indicating insufficient separation</li>
+</ul>
+
+<p>Reason:</p>
+
+<ul>
+  <li>Linear decision boundary</li>
+  <li>No kernel expansion</li>
+  <li>No aggressive hyperparameter tuning</li>
+</ul>
+
+<p>For datasets that require non-linear decision surfaces, linear SVMs predictably underperform.</p>
+
+<p>This behavior is expected.</p>
+
+<hr />
+
+<h2 id="architectural-decisions">Architectural Decisions</h2>
+
+<p>Core design choices:</p>
+
+<ul>
+  <li>Use primal optimization (PEGASOS)</li>
+  <li>Avoid kernel complexity at this stage</li>
+  <li>Emphasize hardware-level control</li>
+  <li>Optimize CPU usage consciously</li>
+  <li>Maintain explicit control over memory and threading</li>
+</ul>
+
+<p>The implementation is not a transcription of any single source. It is the result of iterative derivation, experimentation, and refinement.</p>
+
+<hr />
+
+<h2 id="learning-with-ai-vs-copying-from-ai">Learning With AI vs Copying From AI</h2>
+
+<p>All mathematical derivations and implementation details were accelerated using AI systems.</p>
+
+<p>The distinction between learning and copying lies in:</p>
+
+<ul>
+  <li>Ability to re-derive the objective function independently</li>
+  <li>Ability to reimplement from scratch without reference</li>
+  <li>Understanding convergence behavior</li>
+  <li>Understanding regularization effects</li>
+  <li>Understanding memory and threading trade-offs</li>
+</ul>
+
+<p>If the entire library can be rewritten from first principles with full conceptual clarity, ownership is real.</p>
+
+<p>AI served as:</p>
+
+<ul>
+  <li>A compression mechanism for textbook latency</li>
+  <li><strong>A refinement engine</strong></li>
+  <li>An error detector</li>
+  <li>A boundary expander</li>
+</ul>
+
+<p>The architectural direction and final decisions remained deliberate.</p>
+
+<hr />
+
+<h2 id="systems-level-insights">Systems-Level Insights</h2>
+
+<p>Building PEGASOS from scratch forces attention to:</p>
+
+<ul>
+  <li>Memory bandwidth limits</li>
+  <li>Cache locality</li>
+  <li>Thread contention</li>
+  <li>Numerical stability in subgradient descent</li>
+  <li>Learning rate decay scheduling</li>
+</ul>
+
+<p>The exercise shifts focus from algorithm theory to hardware-aware optimization.</p>
+
+<p>That shift compounds long-term.</p>
+
+<hr />
+
+<h2 id="next-logical-increment">Next Logical Increment</h2>
+
+<p>The next structural jump is <strong>CUDA acceleration</strong>.</p>
+
+<p>Potential benefits:</p>
+
+<ul>
+  <li>Large-scale mini-batch updates</li>
+  <li>Faster convergence on high-dimensional data</li>
+  <li>Experimental work in GPU-accelerated optimization</li>
+</ul>
+
+<p>This is deferred until completion of defined minor project objectives.</p>
+
+<hr />
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Glacier’s SVM implementations:</p>
+
+<ul>
+  <li>Use PEGASOS primal optimization</li>
+  <li>Are fully implemented in C++</li>
+  <li>Leverage Eigen, OpenMP, OpenBLAS</li>
+  <li>Demonstrate competitive speed</li>
+  <li>Underfit predictably on non-linear datasets</li>
+  <li>Reflect system-aware engineering decisions</li>
+</ul>
+
+<p>The value of Glacier lies not in outperforming scikit-learn universally, but in building vertical control:</p>
+
+<p>From math<br />
+To memory<br />
+To threads<br />
+To execution</p>
+
+<p>That control compounds.</p>
