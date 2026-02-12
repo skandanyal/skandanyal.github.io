@@ -313,4 +313,33 @@ footer {
   margin: var(--space-md) auto;
 }
 
+/* Rouge syntax highlighting */
 
+.highlight {
+  background: #f6f6f6;
+  border: 1px solid var(--border-subtle);
+  padding: var(--space-sm);
+  margin: var(--space-md) 0;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.highlight pre {
+  margin: 0;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* Token colors */
+
+.highlight .k { color: #005cc5; font-weight: 600; }   /* keywords */
+.highlight .kt { color: #005cc5; }                    /* types */
+.highlight .nf { color: #6f42c1; }                    /* function names */
+.highlight .c { color: #6a737d; font-style: italic; } /* comments */
+.highlight .s { color: #032f62; }                     /* strings */
+.highlight .m { color: #005cc5; }                     /* numbers */
+.highlight .o { color: #d73a49; }                     /* operators */
+.highlight .p { color: #24292e; }                     /* punctuation */
