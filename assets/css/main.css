@@ -111,8 +111,8 @@ nav .links a:hover {
 /* Section Spacing: Professional Gaps */
 section {
   padding-bottom: var(--space-md);
-  border-bottom: 1px solid var(--border-subtle);
   margin-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border-subtle);
   animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -129,14 +129,14 @@ section:last-of-type {
 .section-label {
   display: block;
   color: var(--text-light);
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-sm);
 }
 
 /* Projects: Technical Card Design */
 .project-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--space-sm);
 }
 
 .project-header {
@@ -164,15 +164,20 @@ section:last-of-type {
 
 .project-item {
   position: relative;
-  padding: var(--space-md) 0;
+  padding: var(--space-sm) 0;
   border-bottom: 1px solid var(--border-subtle);
 }
 
+#projects .project-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
 
 .project-meta {
   display: flex;
   gap: var(--space-xs);
   margin-bottom: var(--space-xs);
+  
 }
 
 .tag {
