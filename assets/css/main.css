@@ -280,6 +280,11 @@ footer {
   font-size: inherit;
 }
 
+#blogs {
+  margin-top: 0;
+  padding-top: var(--space-md);
+}
+
 /* Inline code */
 .prose code {
   font-family: var(--font-mono);
