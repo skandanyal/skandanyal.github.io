@@ -7,7 +7,7 @@ title: Portfolio
   <span class="section-label mono">01 // Identity</span>
   <h1>Skandan C Yalagach</h1>
   <p class="text-lg" style="font-size: 1.25rem; line-height: 1.5; color: #111; max-width: 90%;">
-    Computer Science undergraduate specializing in <strong>Performance-critical numerical kernels</strong> and <strong>Systems-ML 
+    Computer Science undergraduate focusing on <strong>Performance-critical numerical kernels</strong> and <strong>Systems-ML 
     engineering</strong>.
   </p>
   <div class="mono" style="display: flex; gap: 2rem; margin-top: var(--space-md);">
