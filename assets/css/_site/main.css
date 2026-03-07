@@ -128,7 +128,7 @@ section:last-of-type {
 
 .section-label {
   display: block;
-  color: var(--text-decoration);
+  color: var(--text);
   margin-bottom: var(--space-sm);
 }
 

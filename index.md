@@ -47,17 +47,30 @@ title: Portfolio
   </div>
 </section>
                                                           
-
 <section id="blogs">
   <span class="section-label mono">03 // Technical Blogs</span>
   <div class="blog-list">
     {% for post in site.posts limit:5 %}
     <a href="{{ post.url | relative_url }}" class="blog-item">
       <span class="blog-date">{{ post.date | date: "%Y . %m . %d" }}</span>
-      <h3>{{ post.title }}</h3>
+      <div class="blog-details">
+        <h3>{{ post.title }}</h3>
+        <div class="blog-meta">
+          <span>{{ post.reading_time }}</span>
+          {% if post.tags %}
+          <span>·</span>
+          <div class="blog-tags">
+            {% for tag in post.tags %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
     </a>
     {% endfor %}
   </div>
   <a href="{{ '/archive/' | relative_url }}" class="btn" style="margin-top: var(--space-md);">Archive // All Posts</a>
 </section>
+
 
