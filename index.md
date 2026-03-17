@@ -48,7 +48,7 @@ title: Portfolio
 </section>
                                                           
 <section id="blogs">
-  <span class="section-label mono">03 // Technical Blogs</span>
+  <span class="section-label mono">03 // From Math to Machines</span>
   <div class="blog-list">
     {% for post in site.posts limit:5 %}
     <a href="{{ post.url | relative_url }}" class="blog-item">
