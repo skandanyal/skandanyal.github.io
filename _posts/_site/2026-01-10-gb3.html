@@ -15,8 +15,6 @@
 
 <p>In local benchmarks, the classifier variant demonstrates <strong>4–10× faster training</strong> compared to scikit-learn under comparable conditions. This post documents the algorithmic design, performance characteristics, and implementation philosophy behind these models.</p>
 
-<hr />
-
 <h2 id="algorithmic-clarification-not-classical-kernel-svm">Algorithmic Clarification: Not Classical Kernel SVM</h2>
 
 <p>Glacier’s SVM implementations are not dual-form, kernelized SVMs.</p>
@@ -30,15 +28,13 @@
 
 <h3 id="classification-objective">Classification Objective</h3>
 
-<p>[
-\min_w \frac{\lambda}{2} |w|^2 + \frac{1}{m} \sum_{i=1}^m \max(0, 1 - y_i w^T x_i)
-]</p>
+\[\min_{w} \frac{\lambda}{2} \|w\|^2
++ \frac{1}{m} \sum_{i=1}^{m} \max\left(0,\; 1 - y_i\, w^{T} x_i\right)\]
 
 <h3 id="regression-objective-ε-insensitive-loss">Regression Objective (ε-insensitive loss)</h3>
 
-<p>[
-\min_w \frac{\lambda}{2} |w|^2 + \frac{1}{m} \sum_{i=1}^m \max(0, |y_i - w^T x_i| - \epsilon)
-]</p>
+\[\min_{w} \frac{\lambda}{2} \|w\|^2
++ \frac{1}{m} \sum_{i=1}^{m} \max\left(0,\; |y_i - w^{T} x_i| - \epsilon\right)\]
 
 <p>This places Glacier’s SVM variants closer in spirit to:</p>
 
@@ -50,8 +46,6 @@
 <p>rather than <code class="language-plaintext highlighter-rouge">SVC</code> with kernel tricks.</p>
 
 <p>The models are strictly <strong>linear</strong>. No feature mapping or kernel transformation is performed.</p>
-
-<hr />
 
 <h2 id="implementation-stack">Implementation Stack</h2>
 
@@ -73,8 +67,6 @@
 
 <p>The implementation avoids unnecessary temporaries and keeps updates memory-local wherever possible.</p>
 
-<hr />
-
 <h3 id="2-openmp-threading-strategy">2. OpenMP Threading Strategy</h3>
 
 <p>Glacier uses <strong>half of the available hardware threads by default</strong>.</p>
@@ -92,8 +84,6 @@
 <p>In contrast, scikit-learn often utilizes all available threads depending on the BLAS backend.</p>
 
 <p>Thread policy alone can significantly affect observed training time.</p>
-
-<hr />
 
 <h2 id="performance-observations">Performance Observations</h2>
 
@@ -113,8 +103,6 @@
 </ul>
 
 <p>This is not a strict apples-to-apples benchmark.</p>
-
-<hr />
 
 <h3 id="underfitting-on-give-me-some-credit">Underfitting on “Give Me Some Credit”</h3>
 
@@ -142,8 +130,6 @@
 
 <p>This behavior is expected.</p>
 
-<hr />
-
 <h2 id="architectural-decisions">Architectural Decisions</h2>
 
 <p>Core design choices:</p>
@@ -157,8 +143,6 @@
 </ul>
 
 <p>The implementation is not a transcription of any single source. It is the result of iterative derivation, experimentation, and refinement.</p>
-
-<hr />
 
 <h2 id="learning-with-ai-vs-copying-from-ai">Learning With AI vs Copying From AI</h2>
 
@@ -187,25 +171,18 @@
 
 <p>The architectural direction and final decisions remained deliberate.</p>
 
-<hr />
-
 <h2 id="systems-level-insights">Systems-Level Insights</h2>
 
 <p>Building PEGASOS from scratch forces attention to:</p>
 
 <ul>
   <li>Memory bandwidth limits</li>
-  <li>Cache locality</li>
-  <li>Thread contention</li>
+  <li>Threading effects</li>
   <li>Numerical stability in subgradient descent</li>
   <li>Learning rate decay scheduling</li>
 </ul>
 
-<p>The exercise shifts focus from algorithm theory to hardware-aware optimization.</p>
-
-<p>That shift compounds long-term.</p>
-
-<hr />
+<p>The exercise places focus on algorithm theory while emphasising on hardware-aware optimization.</p>
 
 <h2 id="next-logical-increment">Next Logical Increment</h2>
 
@@ -220,8 +197,6 @@
 </ul>
 
 <p>This is deferred until completion of defined minor project objectives.</p>
-
-<hr />
 
 <h2 id="conclusion">Conclusion</h2>
 
@@ -244,3 +219,4 @@ To threads<br />
 To execution</p>
 
 <p>That control compounds.</p>
+
