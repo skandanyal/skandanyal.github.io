@@ -1,0 +1,257 @@
+<h2 id="understanding-the-machine">Understanding the Machine</h2>
+
+<p>The device executing your program is built around a <strong>Central Processing Unit</strong> or <strong>CPU</strong> - 
+a collection of independent execution engines called <strong>cores</strong>.</p>
+
+<p>A <strong>core</strong> is a hardware unit capable of executing a sequence of instructions. It contains its 
+own execution pipeline, registers, and control logic. Each core operates independently.</p>
+
+<p>Modern processors contain multiple such cores. This is referred to as a <strong>multicore CPU</strong>. If 
+a processor has (N) cores, it can execute up to (N) independent instruction streams in 
+parallel.</p>
+
+<p>A <strong>thread</strong> is not hardware. It is a software-defined execution context consisting of:</p>
+<ul>
+  <li>a program counter</li>
+  <li>a register state</li>
+  <li>a stack</li>
+</ul>
+
+<p>Threads are scheduled by the operating system onto cores. A core executes instructions from 
+one thread at a time, unless it supports <strong>Simultaneous Multithreading (SMT)</strong>.</p>
+
+<p>In processors with SMT, a single core can maintain multiple thread contexts and issue 
+instructions from them in an interleaved manner. This improves utilization of the core’s pipeline 
+but does not double its computational capacity.</p>
+
+<hr />
+
+<h2 id="parallel-execution">Parallel Execution</h2>
+
+<p>Parallelism arises from simultaneously executing workload(s) on multiple cores.</p>
+
+<p>If there are:</p>
+<ul>
+  <li>(C) cores</li>
+  <li>(T) threads</li>
+</ul>
+
+<p>Then:</p>
+<ul>
+  <li>If (T &lt;= C): threads can execute truly in parallel</li>
+  <li>If (T &gt; C): threads are time-sliced</li>
+</ul>
+
+<p>In C/C++, <code class="language-plaintext highlighter-rouge">OpenMP</code> can be used to execute multithreading using its <code class="language-plaintext highlighter-rouge">#pragma</code> directives. Deeper, 
+fine-grained control can be harnessed using <code class="language-plaintext highlighter-rouge">std::threads</code>, although is much harder and results in 
+additional overhead, which OpenMP solves internally.</p>
+
+<p>SMT allows multiple threads to share a single core, but this is a latency-hiding mechanism, 
+not a source of linear speedup.</p>
+
+<hr />
+
+<h2 id="memory-hierarchy">Memory Hierarchy</h2>
+
+<p>The processor does not operate directly on data from main memory in most cases. Instead, it 
+relies on a hierarchy:</p>
+
+<ul>
+  <li><strong>Registers</strong> (inside the core, fastest)</li>
+  <li><strong>L1 / L2 / L3 caches</strong> (on-chip, small but fast)</li>
+  <li><strong>Main memory (RAM)</strong></li>
+  <li><strong>Secondary storage (SSD/HDD)</strong></li>
+</ul>
+
+<p>Data movement becomes progressively slower and more expensive as we go down this hierarchy.</p>
+
+<p>For performance analysis, the critical boundary is between:</p>
+<ul>
+  <li>on-chip computation</li>
+  <li>off-chip memory (RAM)</li>
+</ul>
+
+<hr />
+
+<h2 id="compute-vs-data-movement">Compute vs Data Movement</h2>
+
+<p>Any program performs two fundamental actions:</p>
+<ol>
+  <li><strong>Compute</strong> - arithmetic operations executed by the core</li>
+  <li><strong>Data movement</strong> - transferring data between memory and the core</li>
+</ol>
+
+<p>Performance is limited by whichever of these becomes the bottleneck.</p>
+
+<p>To quantify this, we define:</p>
+
+<ul>
+  <li><strong>Peak compute throughput</strong>: maximum operations per second a CPU can perform</li>
+  <li><strong>Memory bandwidth</strong>: maximum rate at which data can be transferred from memory</li>
+</ul>
+
+<hr />
+
+<h2 id="arithmetic-intensity">Arithmetic Intensity</h2>
+
+<p>Arithmetic intensity is the ratio of compute operations to memory operations 
+(Specifically FLOPs per byte transferred). As the name suggests, it helps quantify the number of times the 
+fetched byte is used for computation. Hence, the program does more work per each memory access, thereby having 
+a high arithmetic intensity.</p>
+
+<p>The arithmetic intensity helps categorize a kernel into either of the two regimes:</p>
+<ul>
+  <li>Low intensity → memory-bound</li>
+  <li>High intensity → compute-bound</li>
+</ul>
+
+<blockquote>
+  <p>For example, the STREAM Triad benchmark (often just called “Triad”) measures sustainable memory bandwidth 
+using a simple vector operation: <code class="language-plaintext highlighter-rouge">A[i] = B[i] + scalar * C[i]</code>. Each iteration performs 2 FLOPs (one multiply 
+and one add) but transfers 3 vectors’ worth of data (two reads and one write), typically 24 bytes for 
+double precision. This gives an arithmetic intensity of about 0.083 FLOPs/byte, which is extremely low, making
+it a classic memory-bound kernel. Because of this, its performance is limited by memory bandwidth rather than 
+compute, which is why it’s used to estimate peak sustained bandwidth in Roofline modeling.</p>
+</blockquote>
+
+<p>The formula to calculate AI is defined in a section below.</p>
+
+<hr />
+
+<h2 id="toward-the-roofline-model">Toward the Roofline Model</h2>
+
+<p>The roofline model was first introduced by a group of scientists at the University of California, Berkeley
+in 2008, in a paper titled:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Roofline: An Insightful Visual Performance Model for Floating-Point Programs 
+and Multicore Architectures
+
+By Samuel Williams, Andrew Waterman and David Patterson
+</code></pre></div></div>
+
+<p>The roofline model combines:</p>
+<ul>
+  <li>peak compute throughput</li>
+  <li>memory bandwidth</li>
+  <li>operational intensity</li>
+</ul>
+
+<p>to determine the maximum achievable performance of a program on a given machine.</p>
+
+<p>It provides a quantitative way to answer:</p>
+
+<ul>
+  <li>Is the program limited by compute or memory?</li>
+  <li>How far is it from hardware limits?</li>
+</ul>
+
+<hr />
+
+<h2 id="building-a-roofline-model">Building a Roofline Model</h2>
+
+<p>The following parameters are required to construct a roofline model. More rigorous
+the calculations, closer to truth is the roofline model.</p>
+
+<ul>
+  <li><strong>Peak Sustained Memory Bandwidth:</strong> Ideally using a memory bandwidth benchmarking suite.
+Example - Triad from STREAM, published by Dr. John D McCalpin, University of Virginia.  <br />
+(check out <a href="https://www.github.com/skandanyal/Glacier.HPC/STREAM">this article</a> to see how Glacier.HPC
+used the TRIAD kernel to observe the peak sustained memory bandwidth)</li>
+</ul>
+
+\[\text{Bandwidth} = \frac{\text{Bytes transferred}}{\text{Execution time}} \text{ Bytes/sec}\]
+
+<ul>
+  <li><strong>Peak Compute Throughput:</strong> Calculated using -</li>
+</ul>
+
+\[\text{Peak compute} = \text{cores * frequency * FLOPs per cycle per core FLOPs}\]
+
+<p>(Compute depends on many other factors like SIMD width among others)</p>
+
+<ul>
+  <li><strong>Arithmetic Intensity:</strong> Calculated using -</li>
+</ul>
+
+\[\text{Arithmetic Intensity = FLOPs / Bytes moved FLOPs/Byte}\]
+
+<ul>
+  <li><strong>Arithmetic Intensity Ridge Point:</strong> Calculated using -</li>
+</ul>
+
+\[\text{Arithmetic Intensity Ridge Point} = \frac{\text{Peak compute throughput}}{\text{Memory bandwidth}} \text{FLOPs/byte}\]
+
+<ul>
+  <li><strong>The Roofline Bound</strong> Calculated using the principal formula, also cited above -</li>
+</ul>
+
+\[\text{Attainable GFlops/sec = Min(Peak Floating Point Performance, Peak Memory Bandwidth * Operational Intensity)}\]
+
+<hr />
+
+<h2 id="visualizing-a-roofline-model">Visualizing a Roofline Model</h2>
+
+<p>The original paper (cited above) demonstrates the roofline model on four different chipsets
+of its time. Here is the roofline model characterising AMD’s Ryzen 5 6600H processor.</p>
+
+<p><img src="/assets/blog4/roofline.png" alt="Roofline model" /></p>
+
+<p><strong>X-axis:</strong> Arithmetic Intensity on the log scale.  <br />
+<strong>Y-axis:</strong> Performance (FLOPs/sec) on the log scale.</p>
+
+<p>The roofline model is conceptually differentiated into two regimes, which all the workload
+inevitably fall into:</p>
+<ul>
+  <li><strong>Memory bound: (Represented in blue)</strong> The performance is bound and scaled with the memory bandwidth.</li>
+  <li><strong>Compute bound: (Represented in orange)</strong> The performance is capped by the peak compute capacity of the physical cores.</li>
+</ul>
+
+<p>The green curve comprising of two straight lines represents the peak achievable performance 
+pertaining to the workload’s Arithmetic Intensity (hereby referred to as <strong>AI</strong>).  <br />
+The diagonally placed line in green represents the <strong>Memory bound</strong> regime, whereas the 
+horizontally placed line in green represents the <strong>Compute bound</strong> regime.</p>
+
+<hr />
+
+<h2 id="using-the-roofline-model">Using the Roofline Model</h2>
+
+<p>The roofline model is a diagnostic of the workload’s nature. It merely places the workload on 
+a coordinate system, which otherwise feels very abstract.</p>
+
+<p>The goal remains to increase the workload’s AI, to push it as much to the right of the graph as 
+possible. This ensures that the cores are increasingly saturated than before, 
+thereby extracting more performance from the existing hardware.</p>
+
+<ul>
+  <li><strong>If memory bound (Represented using a green dot):</strong> As AI increases, the workload moves diagonally up along the green line, until it 
+eventually plateaus along the horizontle line in green.</li>
+  <li><strong>If compute bound: (Represented using a blue dot)</strong> Performance is extracted by increasing the hardware’s compute efficiency, 
+hence moving right along the horizontal line.</li>
+</ul>
+
+<hr />
+
+<h2 id="glacierhpc">Glacier.HPC</h2>
+
+<p>Formally titled as</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Glacier.HPC Profiling, Benchmarking and Analysis of Numerical Kernels derived from common Supervised Machine Learning 
+Algorithms on consumer grade computing hardware.    
+</code></pre></div></div>
+<p>the project contains several iterative optimization experiments on numerical kernels, 
+with their roofline plots and related discussions.</p>
+
+<p>Glacier.HPC is derived from the author’s previous project <a href="https://www.github.com/skandanyal/Glacier.ML">Glacier.ML</a> 
+where ML numerical algorithms were implemented from scratch in C++. It focuses on:</p>
+<ul>
+  <li>measuring arithmetic intensity, performance measures</li>
+  <li>constructing roofline models</li>
+  <li>evaluating optimization strategies
+to finally integrate the results into Glacier.ML.</li>
+</ul>
+
+<hr />
+
+<p>If you wish to ask an AI model to explain the blog, rather copy-paste the original source code to include 
+mathematical formulae from getting ignored: <a href="https://github.com/skandanyal/skandanyal.github.io/blob/main/_posts/2026-03-26-gb4.md">link</a></p>
+
+<p>The content for this blog is derived out of the results obtained through experiments conducted in Glacier.HPC. 
+A deeper discussion along with a concrete example using SAXPY will be explained in the upcoming blog.</p>

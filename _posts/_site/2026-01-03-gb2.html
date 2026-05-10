@@ -73,13 +73,18 @@ allows AVX512/AVX2 auto-reductions based on the chip architecture.</li>
 
 <h2 id="result">Result</h2>
 <p><img src="/assets/blog2/benchmarking_result_knnc.jpeg" alt="KNNC Results" /></p>
-
-<h3 id="benchmarking-setup">Benchmarking Setup</h3>
 <ul>
   <li>Datasets ranged from 500x10 to 140,000x10.</li>
   <li>Observed 100x to 250x speed-up compared to unoptimized builds.</li>
   <li>Final implementation still 4x to 36x slower than scikit-learn models when used with same hyperparameters.</li>
   <li>Optimization infrastructure increased the code complexity and compile time.</li>
+</ul>
+
+<h3 id="benchmarking-setup">Benchmarking setup</h3>
+<ul>
+  <li>Used my laptop’s AMD Ryzen5 6600H CPU paired with 8GB RAM.</li>
+  <li>No background tasks opened manually.</li>
+  <li>Laptop set to ‘Performance’ mode while connected to charger.</li>
 </ul>
 
 <h2 id="learnings">Learnings</h2>
