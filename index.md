@@ -6,14 +6,14 @@ title: Portfolio
 <section id="about">
   <span class="section-label mono">01 // Identity</span>
   <h1>Skandan C Yalagach</h1>
-  <p class="text-lg" style="font-size: 1.25rem; line-height: 1.5; color: #111; max-width: 90%;">
-    Computer Science undergraduate focusing on <strong>Performance-critical numerical kernels</strong> and <strong>Systems-ML 
+  <p class="intro-text">
+    Computer Science undergraduate focusing on <strong>performance-critical numerical kernels</strong> and <strong>systems-ML 
     engineering</strong>.
   </p>
-  <div class="mono" style="display: flex; gap: 2rem; margin-top: var(--space-md);">
-    <a href="https://github.com/skandanyal" style="color: black; text-decoration: none; border-bottom: 1px solid black;">Github</a>
-    <a href="https://linkedin.com/in/skandan-cy/" style="color: black; text-decoration: none; border-bottom: 1px solid black;">LinkedIn</a>
-    <a href="mailto:skandanyalagach@gmail.com" style="color: black; text-decoration: none; border-bottom: 1px solid black;">Email</a>
+  <div class="social-links mono">
+    <a href="https://github.com/skandanyal">GitHub</a>
+    <a href="https://linkedin.com/in/skandan-cy/">LinkedIn</a>
+    <a href="mailto:skandanyalagach@gmail.com">Email</a>
   </div>
 </section>
 
@@ -70,7 +70,7 @@ title: Portfolio
     </a>
     {% endfor %}
   </div>
-  <a href="{{ '/from_math_to_machines/' | relative_url }}" class="btn" style="margin-top: var(--space-md);">Archive // All Posts</a>
+  <a href="{{ '/from_math_to_machines/' | relative_url }}" class="btn archive-btn">Archive // All Posts</a>
 </section>
 
 

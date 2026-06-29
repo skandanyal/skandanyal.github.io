@@ -3,19 +3,21 @@ layout: default
 title: Archive
 ---
 
-<section>
+<section class="archive-section">
   <h1>From Math to Machines</h1>
 
-  <ul>
+  <ul class="archive-list">
     {% for post in site.posts %}
-      <li style="margin-bottom: 1.5rem;">
-        <strong>{{ post.date | date: "%Y-%m-%d" }}</strong><br>
-        <a href="{{ post.url | relative_url }}">
-          {{ post.title }}
-        </a><br>
-        <span style="color: #666;">
-          {{ post.excerpt | strip_html | truncatewords: 15 }}
-        </span>
+      <li class="archive-item">
+        <span class="archive-date mono">{{ post.date | date: "%Y-%m-%d" }}</span>
+        <div class="archive-details">
+          <a href="{{ post.url | relative_url }}" class="archive-title-link">
+            {{ post.title }}
+          </a>
+          <p class="archive-excerpt">
+            {{ post.excerpt | strip_html | truncatewords: 15 }}
+          </p>
+        </div>
       </li>
     {% endfor %}
   </ul>
