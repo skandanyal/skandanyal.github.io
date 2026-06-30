@@ -8,7 +8,7 @@ title: Portfolio
   <div class="hero-content">
     <h1 class="hero-name">Skandan C Yalagach</h1>
     <p class="hero-desc">
-      Computer Science undergraduate focusing on performance-critical numerical kernels and Systems-ML engineering.
+      Computer Science undergraduate focusing on Performance-critical numerical kernels and Systems-ML engineering.
     </p>
     <div class="hero-links">
       <a href="https://github.com/skandanyal">GitHub</a>
@@ -25,11 +25,11 @@ title: Portfolio
     <section id="about">
       <span class="section-label mono">01 // About</span>
       <p class="intro-text">
-        I am a Computer Science undergraduate specializing in <strong>performance-critical numerical kernels</strong> and <strong>Systems-ML engineering</strong>. My work focuses on bridging the gap between mathematical theory and hardware execution.
+        My work focuses on mapping mathematical theory onto consumer hardware constraints. I measure where algorithms hit memory bandwidth or cache limits, then restructure them for the architecture rather than the textbook.
       </p>
-      <p>
-        Currently, I am designing and benchmarking custom machine learning systems at the CPU/GPU border. I am interested in cache-friendly matrix algorithms, SIMD auto-vectorization, thread scheduling overheads, and GPU-driven mini-batch execution profiles.
-      </p>
+      <!-- <p>
+        Currently, I am designing and benchmarking supervised machine learning algorithms at the CPU stage. I am interested in cache-friendly matrix algorithms, SIMD auto-vectorization, thread scheduling overheads, and GPU-driven mini-batch execution profiles.
+      </p> -->
     </section>
 
     <section id="projects">
@@ -38,7 +38,7 @@ title: Portfolio
         <article class="project-item">
           <header class="project-header">
             <h3 class="project-title">Glacier.ML</h3>
-            <span class="project-status">Active</span>
+            <!-- <span class="project-status">Active</span> -->
           </header>
           <p class="project-description">
             A header-only C++20 numerical algorithms library designed for implementing machine learning algorithms from first principles with direct hardware control.
@@ -58,7 +58,7 @@ title: Portfolio
         <article class="project-item">
           <header class="project-header">
             <h3 class="project-title">Glacier.HPC</h3>
-            <span class="project-status">Active</span>
+            <!-- <span class="project-status">Active</span> -->
           </header>
           <p class="project-description">
             Micro-benchmarking, profiling, and Roofline analysis of core numerical kernels (such as GEMM and distance calculations) on consumer CPU and GPU architectures.

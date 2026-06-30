@@ -4,7 +4,7 @@ title: Resume
 permalink: /resume/
 ---
 
-<article class="post-container" style="max-width: 800px; margin: var(--space-lg) auto;">
+<!-- <article class="post-container" style="max-width: 800px; margin: var(--space-lg) auto;">
   <div class="resume-meta">
     <div>
       <span class="section-label mono">Engineering Specs</span>
@@ -80,4 +80,6 @@ permalink: /resume/
       </div>
     </section>
   </div>
-</article>
+</article> -->
+
+coming soon...
