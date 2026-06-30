@@ -1,27 +1,95 @@
 ---
 layout: default
 ---
-<article class="post-container">
-  <a href="{{ '/from_math_to_machines/' | relative_url }}" class="back-link mono">
-    ← All Writing
-  </a>
-  
-  <header class="post-header">
-    <div class="post-date mono">{{ page.date | date: "%Y-%m-%d" }}</div>
-    <h1 class="post-title">{{ page.title }}</h1>
-  </header>
+<div class="post-layout-grid">
+  <article class="post-container">
+    <a href="{{ '/from_math_to_machines/' | relative_url }}" class="back-link mono">
+      ← All Writing
+    </a>
+    
+    <header class="post-header">
+      <div class="post-date mono">{{ page.date | date: "%Y-%m-%d" }}</div>
+      <h1 class="post-title">{{ page.title }}</h1>
+    </header>
 
-  <div class="prose">
-    {{ content }}
-  </div>
+    <div class="prose">
+      {{ content }}
+    </div>
 
-  <div class="comments-section">
-    <script src="https://utteranc.es/client.js"
-            repo="skandanyal/skandanyal.github.io"
-            issue-term="pathname"
-            theme="github-dark"
-            crossorigin="anonymous"
-            async>
-    </script>
-  </div>
-</article>
+    <div class="comments-section">
+      <script src="https://utteranc.es/client.js"
+              repo="skandanyal/skandanyal.github.io"
+              issue-term="pathname"
+              theme="github-dark"
+              crossorigin="anonymous"
+              async>
+      </script>
+    </div>
+  </article>
+
+  <aside class="toc-sidebar">
+    <div class="toc-title mono">Contents</div>
+    <ul id="toc-list" class="toc-list"></ul>
+  </aside>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const headings = Array.from(document.querySelectorAll('.prose h2, .prose h3'));
+  const tocList = document.getElementById('toc-list');
+  if (!tocList || headings.length === 0) {
+    const sidebar = document.querySelector('.toc-sidebar');
+    if (sidebar) sidebar.style.display = 'none';
+    const grid = document.querySelector('.post-layout-grid');
+    if (grid) grid.style.gridTemplateColumns = '1fr';
+    return;
+  }
+
+  headings.forEach((heading) => {
+    if (!heading.id) {
+      heading.id = heading.innerText.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    }
+
+    const li = document.createElement('li');
+    li.className = `toc-item ${heading.tagName.toLowerCase()}`;
+
+    const a = document.createElement('a');
+    a.href = `#${heading.id}`;
+    a.className = 'toc-link';
+    a.innerText = heading.innerText;
+
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  const options = {
+    root: null,
+    rootMargin: '-10% 0px -60% 0px',
+    threshold: 0
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    let activeEntry = null;
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        activeEntry = entry;
+      }
+    });
+
+    if (activeEntry) {
+      const id = activeEntry.target.id;
+      document.querySelectorAll('.toc-link').forEach((link) => {
+        if (link.getAttribute('href') === `#${id}`) {
+          link.classList.add('active');
+          link.parentElement.classList.add('active');
+        } else {
+          link.classList.remove('active');
+          link.parentElement.classList.remove('active');
+        }
+      });
+    }
+  }, options);
+
+  headings.forEach((heading) => observer.observe(heading));
+});
+</script>

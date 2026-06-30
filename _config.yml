@@ -1,6 +1,15 @@
 
 title: Skandan C Yalagach 
 description: From Math to Machines.
+author:
+  name: Skandan C Yalagach
+  email: skandanyalagach@gmail.com
+  uri: https://skandanyal.github.io
+social:
+  name: Skandan C Yalagach
+  links:
+    - https://github.com/skandanyal
+    - https://linkedin.com/in/skandan-cy/
 baseurl: ""
 url: "https://skandanyal.github.io"
 these: null
@@ -21,4 +30,9 @@ exclude:
   - data.ts
   - types.ts
   - components/
+
+collections:
+  notes:
+    output: true
+    permalink: /notes/:name/
 
