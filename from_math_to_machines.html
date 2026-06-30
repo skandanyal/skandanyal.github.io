@@ -13,6 +13,14 @@ title: Archive
         <div class="archive-details">
           <a href="{{ post.url | relative_url }}" class="archive-title-link">
             {{ post.title }}
+            {% if post.tags %}
+              <span>·</span>
+              <div class="blog-tags">
+                {% for tag in post.tags limit:5 %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
           </a>
           <p class="archive-excerpt">
             {{ post.excerpt | strip_html | truncatewords: 15 }}

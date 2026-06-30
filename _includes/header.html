@@ -1,13 +1,19 @@
 
 <nav>
   <a href="{{ '/' | relative_url }}" class="logo">HOME</a>
-  <div class="links">
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+    <span class="nav-toggle-icon"></span>
+  </button>
+  <div class="links" id="nav-links">
     <a href="{{ '/about/' | relative_url }}">About</a>
     <a href="{{ '/' | relative_url }}#projects">Projects</a>
     <a href="{{ '/from_math_to_machines/' | relative_url }}">Blogs</a>
     <a href="{{ '/notes/' | relative_url }}">Notes</a>
     <a href="{{ '/resume/' | relative_url }}">Resume</a>
     <a href="{{ '/contact/' | relative_url }}">Contact</a>
+    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+      <span class="theme-icon"></span>
+    </button>
   </div>
 </nav>
 
