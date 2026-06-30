@@ -81,7 +81,7 @@ title: Portfolio
     <section id="blogs">
       <span class="section-label mono">03 // Writing</span>
       <div class="blog-list">
-        {% for post in site.posts limit:3 %}
+        {% for post in site.posts limit:5 %}
         <a href="{{ post.url | relative_url }}" class="blog-item">
           <span class="blog-date">{{ post.date | date: "%Y.%m.%d" }}</span>
           <div class="blog-details">

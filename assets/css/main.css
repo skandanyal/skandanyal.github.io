@@ -59,7 +59,7 @@ body {
   position: relative;
   height: 100vh;
   width: 100%;
-  background-image: url('../images/hero-bg2.jpeg');
+  background-image: url('../images/hero-bg3.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -68,6 +68,13 @@ body {
   justify-content: flex-end;
   padding: var(--space-xl) var(--space-md);
   margin-bottom: var(--space-lg);
+  
+  /* Retain dark theme variables in both themes to keep the hero section post-processing and text dark-themed */
+  --bg: #071426;
+  --text: #f5f5f5;
+  --text-muted: #f5f5f5;
+  --border: rgba(245, 245, 245, 0.25);
+  --hero-overlay: rgba(7, 20, 38, 0.45);
 }
 
 .hero-overlay {
@@ -1066,6 +1073,7 @@ pre:hover .copy-code-button,
   .hero {
     padding: var(--space-lg) var(--space-sm);
     height: 100vh;
+    height: 100dvh; /* dynamic viewport height to fit visible area */
     align-items: flex-end;
     justify-content: flex-end;
   }
@@ -1074,6 +1082,7 @@ pre:hover .copy-code-button,
     max-width: 100%;
     text-align: right;
     gap: var(--space-xs);
+    transform: translateY(-22px); /* shift upward slightly to avoid dynamic toolbar clipping */
   }
   
   .hero-name {
