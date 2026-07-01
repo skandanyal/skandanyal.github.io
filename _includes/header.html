@@ -1,10 +1,15 @@
-
-<nav>
-  <a href="{{ '/' | relative_url }}" class="logo">HOME</a>
-  <div class="links">
-    <a href="{{ '/' | relative_url }}#about">About</a>
-    <a href="{{ '/' | relative_url }}#projects">Projects</a>
-    <a href="{{ '/archive/' | relative_url }}">Blogs</a>
-  </div>
-</nav>
-
+<header class="site-header">
+  <nav class="navbar">
+    <a href="{{ '/' | relative_url }}" class="navbar-brand">Home</a>
+    <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="navbar-menu" id="navbar-menu">
+      <a href="{{ '/projects/' | relative_url }}" {% if page.url contains '/projects/' %}class="active"{% endif %}>Projects</a>
+      <a href="{{ '/blogs/' | relative_url }}" {% if page.url contains '/blogs/' %}class="active"{% endif %}>Blogs</a>
+      <button id="theme-toggle" class="theme-toggle-btn">Theme</button>
+    </div>
+  </nav>
+</header>

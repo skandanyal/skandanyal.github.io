@@ -11,16 +11,18 @@ layout: default
     </aside>
 
     <article class="prose-content">
-      <a href="{{ '/blogs/' | relative_url }}" class="back-link">&larr; Back to Blogs</a>
+      <a href="{{ '/projects/' | relative_url }}" class="back-link">&larr; Back to Projects</a>
       
       <header class="post-header">
         <h1 class="post-title">{{ page.title }}</h1>
         <div class="post-metadata">
-          <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
-          {% if page.tags %}
-            <br>
-            {% for tag in page.tags %}
-              <span class="blog-tag">{{ tag }}</span>
+          {% if page.date %}
+            <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+          {% endif %}
+          {% if page.tech %}
+            {% if page.date %}&bull;{% endif %}
+            {% for tech_tag in page.tech %}
+              <span class="blog-tag">{{ tech_tag }}</span>
             {% endfor %}
           {% endif %}
         </div>

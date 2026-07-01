@@ -1,76 +1,88 @@
 ---
-layout: default
-title: Portfolio
+layout: page
+title: Home
 ---
 
-<section id="about">
-  <span class="section-label mono">01 // Identity</span>
-  <h1>Skandan C Yalagach</h1>
-  <p class="text-lg" style="font-size: 1.25rem; line-height: 1.5; color: #111; max-width: 90%;">
-    Computer Science undergraduate focusing on <strong>Performance-critical numerical kernels</strong> and <strong>Systems-ML 
-    engineering</strong>.
+<section class="hero-open">
+  <p class="hero-eyebrow">Systems • ML • Performance</p>
+
+  <h1 class="hero-name">Skandan C Yalagach</h1>
+
+  <p class="hero-desc">
+    Computer Science undergraduate interested in high-performance computing,
+    machine learning systems, and numerical optimization.
   </p>
-  <div class="mono" style="display: flex; gap: 2rem; margin-top: var(--space-md);">
-    <a href="https://github.com/skandanyal" style="color: black; text-decoration: none; border-bottom: 1px solid black;">Github</a>
-    <a href="https://linkedin.com/in/skandan-cy/" style="color: black; text-decoration: none; border-bottom: 1px solid black;">LinkedIn</a>
-    <a href="mailto:skandanyalagach@gmail.com" style="color: black; text-decoration: none; border-bottom: 1px solid black;">Email</a>
-  </div>
+
+  <p class="hero-desc">
+    I build software that emphasizes correctness, performance, and mathematical
+    reasoning over abstraction for its own sake.
+  </p>
+
+  <nav class="hero-links">
+    <a href="https://github.com/skandanyal" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://linkedin.com/in/skandan-cy/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="mailto:skandanyalagach@gmail.com">Email</a>
+  </nav>
 </section>
 
-<section id="projects">
-  <span class="section-label mono">02 // Technical Work</span>
+<!-- Main container to give the sections structured breathing room -->
+<div class="content-stream">
 
-  <div class="project-list">
-    {% for project in site.data.projects %}
-    <article class="project-item">
+  <section class="home-section">
+    <h2 class="section-title">Current Work</h2>
+    <ul class="clean-stream-list">
+      <!-- <li>Building <span class="text-contrast">Glacier.ML</span>, a CPU-focused machine learning framework in C++.</li> -->
+      <li>Building <strong>Glacier.ML</strong> - a CPU-focused machine learning framework in C++.</li>
+      <li>Studying roofline analysis and performance modeling for numerical kernels in <strong>Glacier.HPC</strong>.</li>
+      <li>Exploring optimization techniques for scientific computing on commodity hardware.</li>
+      <li>Contributing to Open Source C++ infrastructure.</li>
+    </ul>
+  </section>
 
-      <header class="project-header">
-        <h3 class="project-title">{{ project.title }}</h3>
-
-        <div class="project-tags">
-          {% for tag in project.tags %}
-          <span class="tag mono">{{ tag }}</span>
-          {% endfor %}
-        </div>
-      </header>
-
-      <p class="project-description">
-        {{ project.description }}
-      </p>
-
-      <a href="{{ project.github }}" class="btn mono">
-        View Source →
-      </a>
-
-    </article>
-    {% endfor %}
-  </div>
-</section>
-                                                          
-<section id="blogs">
-  <span class="section-label mono">03 // From Math to Machines</span>
-  <div class="blog-list">
-    {% for post in site.posts limit:5 %}
-    <a href="{{ post.url | relative_url }}" class="blog-item">
-      <span class="blog-date">{{ post.date | date: "%Y . %m . %d" }}</span>
-      <div class="blog-details">
-        <h3>{{ post.title }}</h3>
-        <div class="blog-meta">
-          <span>{{ post.reading_time }}</span>
-          {% if post.tags %}
-          <span>·</span>
-          <div class="blog-tags">
-            {% for tag in post.tags %}
-            <span class="tag">{{ tag }}</span>
-            {% endfor %}
-          </div>
-          {% endif %}
-        </div>
+  <section class="home-section">
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="project-stream">
+      <div class="project-item">
+        <h3 class="project-name">Glacier.ML</h3>
+        <p class="project-desc">A machine learning framework focused on CPU performance, numerical methods, and modular design.</p>
       </div>
-    </a>
-    {% endfor %}
-  </div>
-  <a href="{{ '/from_math_to_machines/' | relative_url }}" class="btn" style="margin-top: var(--space-md);">Archive // All Posts</a>
+      
+      <div class="project-item">
+        <h3 class="project-name">Glacier.HPC</h3>
+        <p class="project-desc">Experimental tools for performance analysis, benchmarking, and roofline evaluation of computational kernels.</p>
+      </div>
+    </div>
+
+    <br>
+    <div class="card-actions">
+        <a href="{{ '/projects/' | relative_url }}" class="btn" target="_blank" rel="noopener noreferrer">View all projects</a>
+    </div>
+
+    <!-- <p class="section-link">
+      <a href="/projects/" class="minimal-arrow-link">View all projects</a>
+    </p> -->
+  </section>
+
+  <section class="home-section">
+  <h2 class="section-title">Open Source</h2>
+
+  <p class="section-body">
+    Contributions to open-source projects are documented in the
+    <a href="/projects/#open-source" class="hero-link">Projects</a>
+    page, including repositories, pull requests, and implementation summaries.
+  </p>
 </section>
 
+  <section class="home-section">
+    <h2 class="section-title">Writing</h2>
+    <p class="section-body">
+      I write about systems programming, numerical computing, machine learning, optimization, and topics that lie between mathematics and software.
+    </p>
 
+    <br>
+    <div class="card-actions">
+        <a href="{{ '/blogs/' | relative_url }}" class="btn" target="_blank" rel="noopener noreferrer">View Blogs</a>
+    </div>
+  </section>
+
+</div>
