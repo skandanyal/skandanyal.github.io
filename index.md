@@ -14,7 +14,7 @@ title: Home
   </p>
 
   <p class="hero-desc">
-    I build software that emphasizes correctness, performance, and mathematical
+    I build software in <strong>C++</strong> that emphasizes correctness, performance, and mathematical
     reasoning over abstraction for its own sake.
   </p>
 
@@ -27,6 +27,19 @@ title: Home
 
 <!-- Main container to give the sections structured breathing room -->
 <div class="content-stream">
+
+  <section class="home-section">
+  <h2 class="section-title">About</h2>
+
+  <p class="section-body">
+    Based in <strong>Mysore, India</strong>.
+  </p>
+  <br>
+  <p class="section-body">
+    Pursuing a <strong>B.E. in Computer Science and Engineering (Artificial Intelligence & Machine Learning)</strong>,
+    August 2023 – Present.
+  </p>
+</section>
 
   <section class="home-section">
     <h2 class="section-title">Current Work</h2>
