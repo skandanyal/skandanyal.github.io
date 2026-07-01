@@ -1,109 +1,88 @@
 ---
-layout: default
-title: Portfolio
+layout: page
+title: Home
 ---
 
-<div class="hero">
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <h1 class="hero-name">Skandan C Yalagach</h1>
-    <p class="hero-desc">
-      Computer Science undergraduate focusing on Performance-critical numerical kernels and Systems-ML engineering.
-    </p>
-    <div class="hero-links">
-      <a href="https://github.com/skandanyal">GitHub</a>
-      <a href="https://linkedin.com/in/skandan-cy/">LinkedIn</a>
-      <a href="mailto:skandanyalagach@gmail.com">Email</a>
+<section class="hero-open">
+  <p class="hero-eyebrow">Systems • ML • Performance</p>
+
+  <h1 class="hero-name">Skandan C Yalagach</h1>
+
+  <p class="hero-desc">
+    Computer Science undergraduate interested in high-performance computing,
+    machine learning systems, and numerical optimization.
+  </p>
+
+  <p class="hero-desc">
+    I build software that emphasizes correctness, performance, and mathematical
+    reasoning over abstraction for its own sake.
+  </p>
+
+  <nav class="hero-links">
+    <a href="https://github.com/skandanyal" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://linkedin.com/in/skandan-cy/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="mailto:skandanyalagach@gmail.com">Email</a>
+  </nav>
+</section>
+
+<!-- Main container to give the sections structured breathing room -->
+<div class="content-stream">
+
+  <section class="home-section">
+    <h2 class="section-title">Current Work</h2>
+    <ul class="clean-stream-list">
+      <!-- <li>Building <span class="text-contrast">Glacier.ML</span>, a CPU-focused machine learning framework in C++.</li> -->
+      <li>Building <strong>Glacier.ML</strong> - a CPU-focused machine learning framework in C++.</li>
+      <li>Studying roofline analysis and performance modeling for numerical kernels in <strong>Glacier.HPC</strong>.</li>
+      <li>Exploring optimization techniques for scientific computing on commodity hardware.</li>
+      <li>Contributing to Open Source C++ infrastructure.</li>
+    </ul>
+  </section>
+
+  <section class="home-section">
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="project-stream">
+      <div class="project-item">
+        <h3 class="project-name">Glacier.ML</h3>
+        <p class="project-desc">A machine learning framework focused on CPU performance, numerical methods, and modular design.</p>
+      </div>
+      
+      <div class="project-item">
+        <h3 class="project-name">Glacier.HPC</h3>
+        <p class="project-desc">Experimental tools for performance analysis, benchmarking, and roofline evaluation of computational kernels.</p>
+      </div>
     </div>
-  </div>
-</div>
 
-<div class="container">
-  {% include header.html %}
+    <br>
+    <div class="card-actions">
+        <a href="{{ '/projects/' | relative_url }}" class="btn" target="_blank" rel="noopener noreferrer">View all projects</a>
+    </div>
 
-  <main>
-    <section id="about">
-      <span class="section-label mono">01 // About</span>
-      <p class="intro-text">
-        My work focuses on mapping mathematical theory onto consumer hardware constraints. I measure where algorithms hit memory bandwidth or cache limits, then restructure them for the architecture rather than the textbook.
-      </p>
-      <!-- <p>
-        Currently, I am designing and benchmarking supervised machine learning algorithms at the CPU stage. I am interested in cache-friendly matrix algorithms, SIMD auto-vectorization, thread scheduling overheads, and GPU-driven mini-batch execution profiles.
-      </p> -->
-    </section>
+    <!-- <p class="section-link">
+      <a href="/projects/" class="minimal-arrow-link">View all projects</a>
+    </p> -->
+  </section>
 
-    <section id="projects">
-      <span class="section-label mono">02 // Featured Projects</span>
-      <div class="project-list">
-        <article class="project-item">
-          <header class="project-header">
-            <h3 class="project-title">Glacier.ML</h3>
-            <!-- <span class="project-status">Active</span> -->
-          </header>
-          <p class="project-description">
-            A header-only C++20 numerical algorithms library designed for implementing machine learning algorithms from first principles with direct hardware control.
-          </p>
-          <div class="project-tags" style="margin-bottom: var(--space-xs);">
-            <span class="tag">C++20</span>
-            <span class="tag">Eigen</span>
-            <span class="tag">OpenBLAS</span>
-            <span class="tag">Linear Algebra</span>
-          </div>
-          <div style="display: flex; gap: var(--space-sm);">
-            <a href="https://github.com/skandanyal/Glacier.ML" class="btn">GitHub</a>
-            <a href="{{ '/projects/glacier-ml/' | relative_url }}" class="btn">Documentation</a>
-          </div>
-        </article>
+  <section class="home-section">
+  <h2 class="section-title">Open Source</h2>
 
-        <article class="project-item">
-          <header class="project-header">
-            <h3 class="project-title">Glacier.HPC</h3>
-            <!-- <span class="project-status">Active</span> -->
-          </header>
-          <p class="project-description">
-            Micro-benchmarking, profiling, and Roofline analysis of core numerical kernels (such as GEMM and distance calculations) on consumer CPU and GPU architectures.
-          </p>
-          <div class="project-tags" style="margin-bottom: var(--space-xs);">
-            <span class="tag">C++20</span>
-            <span class="tag">CUDA</span>
-            <span class="tag">OpenMP</span>
-            <span class="tag">perf</span>
-            <span class="tag">Roofline Modeling</span>
-          </div>
-          <div style="display: flex; gap: var(--space-sm);">
-            <a href="https://github.com/skandanyal/Glacier.HPC" class="btn">GitHub</a>
-            <a href="{{ '/projects/glacier-hpc/' | relative_url }}" class="btn">Documentation</a>
-          </div>
-        </article>
-      </div>
-    </section>
+  <p class="section-body">
+    Contributions to open-source projects are documented in the
+    <a href="/projects/#open-source" class="hero-link">Projects</a>
+    page, including repositories, pull requests, and implementation summaries.
+  </p>
+</section>
 
-    <section id="blogs">
-      <span class="section-label mono">03 // Writing</span>
-      <div class="blog-list">
-        {% for post in site.posts limit:5 %}
-        <a href="{{ post.url | relative_url }}" class="blog-item">
-          <span class="blog-date">{{ post.date | date: "%Y.%m.%d" }}</span>
-          <div class="blog-details">
-            <h3>{{ post.title }}</h3>
-            <div class="blog-meta">
-              <span>{{ post.reading_time }}</span>
-              {% if post.tags %}
-              <span>·</span>
-              <div class="blog-tags">
-                {% for tag in post.tags limit:3 %}
-                <span class="tag">{{ tag }}</span>
-                {% endfor %}
-              </div>
-              {% endif %}
-            </div>
-          </div>
-        </a>
-        {% endfor %}
-      </div>
-      <a href="{{ '/from_math_to_machines/' | relative_url }}" class="btn archive-btn">Archive // All Posts</a>
-    </section>
-  </main>
+  <section class="home-section">
+    <h2 class="section-title">Writing</h2>
+    <p class="section-body">
+      I write about systems programming, numerical computing, machine learning, optimization, and topics that lie between mathematics and software.
+    </p>
 
-  {% include footer.html %}
+    <br>
+    <div class="card-actions">
+        <a href="{{ '/blogs/' | relative_url }}" class="btn" target="_blank" rel="noopener noreferrer">View Blogs</a>
+    </div>
+  </section>
+
 </div>

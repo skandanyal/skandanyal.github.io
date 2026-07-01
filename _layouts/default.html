@@ -1,102 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title }} | {{ site.title }}</title>
-
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-  <link rel="icon" type="image/svg+xml" href="{{ '/favicon.svg' | relative_url }}">
+  <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }} | {{ site.description }}{% endif %}</title>
 
   {% seo %}
 
-  <!-- KaTeX support -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="icon" type="image/svg+xml" href="{{ '/favicon.svg' | relative_url }}">
 
-  <!-- Mermaid support -->
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <meta name="color-scheme" content="light dark">
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-  });
+    (function() {
+      const t = localStorage.getItem("color-scheme");
+      if (t === "dark" || t === "light") {
+        document.documentElement.setAttribute("data-theme", t);
+      }
+    })();
   </script>
-</head>
 
-<body>
-  {% if page.url == "/" or page.url == "/index.html" %}
-    {{ content }}
-  {% else %}
-    <div class="container">
-      {% include header.html %}
-      
-      <main>
-        {{ content }}
-      </main>
-      
-      {% include footer.html %}
-    </div>
-  {% endif %}
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('pre.highlight, .prose pre').forEach((codeBlock) => {
-      if (codeBlock.querySelector('.copy-code-button')) return;
-
-      const button = document.createElement('button');
-      button.className = 'copy-code-button';
-      button.type = 'button';
-      button.innerText = 'Copy';
-
-      button.addEventListener('click', () => {
-        const codeElement = codeBlock.querySelector('code');
-        const code = codeElement ? codeElement.innerText : codeBlock.innerText;
-        navigator.clipboard.writeText(code).then(() => {
-          button.innerText = 'Copied!';
-          button.classList.add('copied');
-          setTimeout(() => {
-            button.innerText = 'Copy';
-            button.classList.remove('copied');
-          }, 2000);
+    window.addEventListener('load', function () {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\[', right: '\\]', display: true },
+            { left: '\\(', right: '\\)', display: false }
+          ],
+          throwOnError: false
         });
-      });
-
-      codeBlock.style.position = 'relative';
-      codeBlock.appendChild(button);
+      }
     });
-
-    const toggleBtn = document.getElementById('theme-toggle');
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-      });
-    }
-
-    // Mobile nav toggle script
-    const navToggle = document.getElementById('nav-toggle');
-    const navLinks = document.getElementById('nav-links');
-    if (navToggle && navLinks) {
-      navToggle.addEventListener('click', () => {
-        navToggle.classList.toggle('active');
-        navLinks.classList.toggle('active');
-      });
-
-      navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          navToggle.classList.remove('active');
-          navLinks.classList.remove('active');
-        });
-      });
-    }
-  });
   </script>
+
+  {% feed_meta %}
+</head>
+<body>
+
+  {% include header.html %}
+
+  <main id="content-container">
+    {{ content }}
+  </main>
+
+  {% include footer.html %}
+
+  <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+
+
 </body>
 </html>
