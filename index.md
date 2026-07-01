@@ -14,8 +14,8 @@ title: Home
   </p>
 
   <p class="hero-desc">
-    I build software in <strong>C++</strong> that emphasizes correctness, performance, and mathematical
-    reasoning over abstraction for its own sake.
+    I build <strong>C++</strong> software for performance critical machine learning
+     using benchmarking and performance analysis to guide design decisions.
   </p>
 
   <nav class="hero-links">
