@@ -3,7 +3,7 @@ layout: project
 title: Glacier.ML
 permalink: /projects/Glacier.ML/
 description: A performance-focused C++20 based Numerical Algorithms library, designed to build and experiment with machine learning algorithms while emphasizing efficiency on modern multi-core CPU architectures.
-tech: [C++, BLAS, Eigen, Python]
+tech: [C++, OpenMP, OpenBLAS, Eigen]
 github_url: https://github.com/skandanyal/Glacier.ML
 date: 2026-06-25
 ---
