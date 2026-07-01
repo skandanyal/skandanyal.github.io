@@ -1,5 +1,5 @@
 ---
 layout: blogs
 title: Blogs
-permalink: /blogs/
+permalink: /from_math_to_machines/
 ---

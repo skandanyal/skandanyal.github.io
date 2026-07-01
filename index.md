@@ -94,7 +94,7 @@ title: Home
 
     <br>
     <div class="card-actions">
-        <a href="{{ '/blogs/' | relative_url }}" class="btn" target="_blank" rel="noopener noreferrer">View Blogs</a>
+        <a href="{{ '/from_math_to_machines/' | relative_url }}" class="btn" target="_blank" rel="noopener noreferrer">View Blogs</a>
     </div>
   </section>
 

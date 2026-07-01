@@ -19,7 +19,7 @@ url: "https://skandanyal.github.io"
 markdown: kramdown
 highlighter: rouge
 
-permalink: /blogs/:title/
+permalink: /from_math_to_machines/:title/
 
 future: true
 
