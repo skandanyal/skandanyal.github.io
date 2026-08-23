@@ -59,7 +59,7 @@ title: Home
         <h3 class="project-name">Glacier.ML</h3>
         <p class="project-desc">A machine learning framework focused on CPU performance, numerical methods, and modular design.</p>
       </div>
-      
+
       <div class="project-item">
         <h3 class="project-name">Glacier.HPC</h3>
         <p class="project-desc">Experimental tools for performance analysis, benchmarking, and roofline evaluation of computational kernels.</p>
@@ -74,9 +74,10 @@ title: Home
     <!-- <p class="section-link">
       <a href="/projects/" class="minimal-arrow-link">View all projects</a>
     </p> -->
-  </section>
 
-  <section class="home-section">
+</section>
+
+  <!-- <section class="home-section">
   <h2 class="section-title">Open Source</h2>
 
   <p class="section-body">
@@ -84,7 +85,7 @@ title: Home
     <a href="/projects/#open-source" class="hero-link">Projects</a>
     page, including repositories, pull requests, and implementation summaries.
   </p>
-</section>
+</section> -->
 
   <section class="home-section">
     <h2 class="section-title">Writing</h2>
@@ -96,6 +97,7 @@ title: Home
     <div class="card-actions">
         <a href="{{ '/from_math_to_machines/' | relative_url }}" class="btn" target="_blank" rel="noopener noreferrer">View Blogs</a>
     </div>
+
   </section>
 
 </div>
