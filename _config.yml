@@ -1,5 +1,4 @@
-
-title: Skandan C Yalagach 
+title: Skandan C Yalagach
 description: From Math to Machines.
 author:
   name: Skandan C Yalagach
@@ -22,17 +21,16 @@ future: true
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
-
+  - jekyll-github-metadata
 exclude:
   - metadata.json
   - index.tsx
   - App.tsx
   - data.ts
-  - types.ts	
+  - types.ts
   - components/
 
 collections:
   notes:
     output: true
     permalink: /notes/:name/
-

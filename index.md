@@ -68,7 +68,7 @@ title: Home
 
     <br>
     <div class="card-actions">
-        <a href="{{ '/projects/' | relative_url }}" class="btn" target="_blank" rel="noopener noreferrer">View all projects</a>
+        <a href="{{ '/projects/' | relative_url }}" class="btn" rel="noopener noreferrer">View all projects</a>
     </div>
 
     <!-- <p class="section-link">
@@ -95,7 +95,7 @@ title: Home
 
     <br>
     <div class="card-actions">
-        <a href="{{ '/from_math_to_machines/' | relative_url }}" class="btn" target="_blank" rel="noopener noreferrer">View Blogs</a>
+        <a href="{{ '/from_math_to_machines/' | relative_url }}" class="btn" rel="noopener noreferrer">View Blogs</a>
     </div>
 
   </section>
